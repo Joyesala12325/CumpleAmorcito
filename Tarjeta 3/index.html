@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Feliz Cumpleaños! ♥</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url("https://i.pinimg.com/1200x/60/17/15/6017150f69585aab19394de8773672d9.jpg") center/cover no-repeat;
+        font-family: "Dancing Script", cursive;
+        overflow-x: hidden;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+    }
+
+    /* SOBRE */
+    .envelope {
+        width: 300px;
+        height: 200px;
+        background: url("https://i.pinimg.com/1200x/9b/bd/35/9bbd3544ca1c5811c71df636217127de.jpg") center/cover no-repeat;
+        position: relative;
+        cursor: pointer;
+        border-radius: 6px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        transition: transform 20s ease;
+    }
+
+    /* Tapa del sobre */
+    .envelope .flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg,#fbdc99,#f3ca78);
+        clip-path: polygon(0 0, 100% 0, 50% 60%);
+        transform-origin: top;
+        transition: transform 1s ease;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    /* Sello de cera */
+    .wax-seal {
+        width: 60px;
+        height: 60px;
+        background: #ff0000;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: inset 0 0 8px #400, 0 0 10px rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Georgia", serif;
+        font-size: 28px;
+        color: #f2d2a9;
+        text-shadow: 1px 1px 1px #000;
+        transition: opacity 0.5s ease;
+    }
+
+    /* Texto Ábreme */
+    .open-text {
+        margin-top: 5px;
+        font-size: 35px;
+        font-family: "Brush Script MT", cursive;
+        animation: blink 1.3s infinite;
+        color: #ff0000;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: .3; }
+        100% { opacity: 1; }
+    }
+
+    /* Carta */
+    .letter {
+        width: 80%;
+        max-width: 500px;
+        padding: 30px;
+        background: #fffdf7;
+        margin-top: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.2s ease, transform 1.2s ease;
+        font-size: 24px;
+        line-height: 1.6;
+        font-family: "Dancing Script", cursive;
+    }
+
+
+    /* Confetti */
+    .confetti {
+        position: fixed;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        background: hsl(var(--hue), 100%, 70%);
+        border-radius: 50%;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        from { transform: translateY(-10px); }
+        to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="wax-seal">I♥U</div>
+    </div>
+
+    <div class="open-text">Ábreme ♥♥♥</div>
+
+    <div class="letter" id="letter">
+        <img src="" class="img-carta">
+
+        <b>Cosita linda: &#128525;</b><br><br>
+        Hoy cumples 35 y solo quiero decirte algo sencillo pero verdadero: <br>
+        Eres lo mejor que me ha pasado en la vida.
+        Gracias por ser mi alegría, mi abrazo cálido y mi lugar favorito.
+        Te amo más de lo que las palabras pueden expresar.<br><br>
+        ¡Feliz cumpleaños Amor mío &#128151;!<br>
+        Y que cumplas muchos años más!, &#128536;<br><br>
+        <b>Con amor: JS. &#128151;</b><br>
+        &#127880; &#127881; &#127874; &#127873; 
+    </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="softSound">
+    <source src="Target/Happy Birthday_267439116 - Xeno Sound.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+const envelope = document.getElementById("envelope");
+const flap = envelope.querySelector(".flap");
+const seal = envelope.querySelector(".wax-seal");
+const letter = document.getElementById("letter");
+const audio = document.getElementById("softSound");
+
+envelope.addEventListener("click", () => {
+
+    /* Abrir tapa */
+    flap.style.transform = "rotateX(160deg)";
+
+    /* Desaparece el sello */
+    seal.style.opacity = "0";
+
+    /* Reproducir audio */
+    audio.play().catch(()=>{});
+
+    /* Mostrar carta */
+    setTimeout(() => {
+        letter.style.opacity = "1";
+        letter.style.transform = "translateY(0)";
+        confettiExplosionRepeated(); // Confetti x10
+    }, 900);
+});
+
+/* CONFETTI NORMAL */
+function confettiExplosion() {
+    for (let i = 0; i < 300; i++) {
+        const c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.top = "-10px";
+        c.style.setProperty("--hue", Math.random() * 360);
+        c.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+    }
+}
+
+/* CONFETTI REPETIDO 10 VECES */
+function confettiExplosionRepeated(times = 10, delay = 1000) {
+    let count = 0;
+
+    function launch() {
+        confettiExplosion();
+        count++;
+        if (count < times) {
+            setTimeout(launch, delay);
+        }
+    }
+
+    launch();
+}
+</script>
+
+</body>
+</html>
